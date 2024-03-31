@@ -1,0 +1,111 @@
+# https://www.springcloud.io/post/2022-05/springboot-3-0/#multi-document-yaml
+
+# Shared profile ====================================================================================
+
+
+comment:
+  text:
+    validation:
+      minimum-length: 3
+      maximum-length: 2000
+
+file:
+  provider: FILE_SYSTEM_FILE_PROVIDER
+  # provider: S3_FILE_PROVIDER
+
+first-name:
+  validation:
+    minimum-length: 3
+    maximum-length: 256
+
+jwt:
+  life-in-milliseconds: 6000000
+
+last-name:
+  validation:
+    minimum-length: 3
+    maximum-length: 256
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: INFO
+        type: INFO
+      springframework:
+        security: INFO
+
+password:
+  validation:
+    needs-mixed-case: true
+    minimum-length: 7
+    maximum-length: 30
+    needs-special-characters: true
+    needs-numbers: true
+    needs-letters: true
+
+post:
+  title:
+    validation:
+      minimum-length: 3
+      maximum-length: 256
+  text:
+    validation:
+      minimum-length: 3
+      maximum-length: 4000
+
+username:
+  validation:
+    minimum-length: 3
+    maximum-length: 15
+
+web:
+  server:
+    port: 80
+    protocol: http
+    domain: blog.com
+
+---
+
+# EM PROFILE =======================================================================================
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: INFO
+        type: INFO
+      springframework:
+        security: INFO
+
+spring:
+  config:
+        activate:
+            on-profile: "em"
+  datasource:
+    url: jdbc:postgresql://localhost:5432/blog
+    username: blog
+    password: blog
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+      enabled: true
+  sql:
+    init:
+      data-locations: 
+        classpath:sql/standing_data.sql
+      mode: always
+
+

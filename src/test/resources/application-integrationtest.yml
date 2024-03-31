@@ -1,0 +1,57 @@
+
+file:
+  provider: FILE_SYSTEM_FILE_PROVIDER
+  # provider: S3_FILE_PROVIDER
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: INFO
+        type: INFO
+        
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/blog
+    username: blog
+    password: blog
+    driver-class-name: org.postgresql.Driver
+    
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+      enabled: true
+
+web:
+  server:
+    port: 80
+    protocol: http
+    domain: blog.com
+    
+# 29 years
+jwt:
+  life-in-milliseconds: 900000000000
+  
+server:
+  servlet:
+    connection-timeout: 5000000000
+
+---
+
+# https://www.springcloud.io/post/2022-05/springboot-3-0/#multi-document-yaml
+
+spring:
+    config:
+        activate:
+            on-profile: "integrationtest"
